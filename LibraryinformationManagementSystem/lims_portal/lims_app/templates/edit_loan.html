@@ -1,0 +1,93 @@
+{% extends "index.html" %}
+{% load static %}
+{% block main_content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ödünç Kaydını Düzenle</title>
+    <style>
+        body {
+            background-color: #f0f5f9;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #3883C2;
+        }
+
+        .form-container {
+            margin-top: 20px;
+        }
+
+        .form-container label {
+            font-weight: bold;
+            color: #2166ef;
+        }
+
+        .form-container input[type="text"],
+        .form-container input[type="date"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-container button {
+            background-color: #2166ef;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .form-container button:hover {
+            background-color: #1952c8;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Ödünç Kaydını Düzenle</h1>
+        <div class="form-container">
+            <form action="{% url 'edit_loan' loan.id %}" method="POST">
+                {% csrf_token %}
+                <label for="tc">TC:</label>
+                <input type="text" id="tc" name="tc" value="{{ loan.tc }}">
+
+                <label for="name">İsim:</label>
+                <input type="text" id="name" name="name" value="{{ loan.name }}">
+
+                <label for="surname">Soyisim:</label>
+                <input type="text" id="surname" name="surname" value="{{ loan.surname }}">
+
+                <label for="book">Kitap:</label>
+                <input type="text" id="book" name="book" value="{{ loan.book }}">
+
+                <label for="date">Tarih:</label>
+                <input type="date" id="date" name="date" value="{{ loan.date|date:'Y-m-d' }}">
+
+                <button type="submit">Kaydet</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
+{% endblock %}

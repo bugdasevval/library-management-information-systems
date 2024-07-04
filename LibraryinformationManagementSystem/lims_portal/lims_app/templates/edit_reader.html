@@ -1,0 +1,24 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block main_content %}
+<div class="container">
+    <h2>Okuyucu Düzenle</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="reference_name">İsim:</label>
+            <input type="text" class="form-control" id="reference_name" name="reference_name" value="{{ reader.reference_name }}">
+        </div>
+        <div class="form-group">
+            <label for="reference_contact">İletişim:</label>
+            <input type="text" class="form-control" id="reference_contact" name="reference_contact" value="{{ reader.reference_contact }}">
+        </div>
+        <div class="form-group">
+            <label for="reader_address">Adres:</label>
+            <textarea class="form-control" id="reader_address" name="reader_address">{{ reader.reader_address }}</textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+    </form>
+</div>
+{% endblock %}

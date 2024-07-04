@@ -1,0 +1,92 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block main_content %}
+<div class="container-flex text-center justify-content-center align-items-center" style="padding-top: 10px; padding-bottom: 20px; margin-top: 10px;vertical-align:middle;">
+    <div class="row justify-content-center align-middle" style="margin-top: 10px;height:60px;width: 1425px">
+        <div class="col-md-4 text-light " style="background-color: #3883C2">
+            <h4 style="background-color: #3883C2">Yeni Okuyucu Kaydet</h4>
+        </div>
+        <div class="col-md-8">
+            <h4 style="margin-top:15px">Okuyucu Ara</h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="container" style="overflow-y:auto;height:600px;background:#CEECF5">
+                <form class="d-flex" action="{% url 'save_student' %}" method="POST">
+                    {% csrf_token %}
+                    <table class="table" style="margin-top: 20px;">
+                        <tr>
+                            <td style="text-align: left;vertical-align:middle; padding-left:15px ;">İsim : </td>
+                            <td><input type="text" class="form-control" name="reference_name"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;vertical-align:middle; padding-left:15px ;">İletişim : </td>
+                            <td><input type="text" class="form-control" name="reference_contact"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;vertical-align:middle; padding-left:15px ;">ID : </td>
+                            <td><input type="text" class="form-control" name="reference_id"></td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;vertical-align:middle; padding-left:15px ;">Adres : </td>
+                            <td><textarea class="form-control"  name="reader_address"></textarea></td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><button class="btn btn-primary" type="submit" style="background-color: #3883C2">Kaydet</button></td>
+                        </tr>
+                    </table>
+                </form>
+                <ul style="text-align: left; vertical:middle ; padding-left: 15px ;">
+                    <li><small>Okuyucular birden fazla kez kaydedilmemeli</small></li>
+                    <li><small>Tekrar edilen okuyucular devre dışı bırakılacak</small></li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <nav class="navbar bg-body-light">
+                    <div class="container-fluid justify-content-center align-items-center">
+                        <form class="d-flex" role="search" action="{% url 'search_reader' %}" method="GET">
+                            <input class="form-control me-2" type="search" name="query" placeholder="Search" aria-label="Search">
+                            <button class="btn btn-outline-primary" type="submit">Ara</button>
+                        </form>
+                    </div>
+                </nav>
+            </div>
+            <div class="row" style="margin-top: 20px;">
+                <p>{{ readers|length }} Okuyucu </p>
+                <table class="table table-bordered table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>İsim</th>
+                            <th>İletişim</th>
+                            <th>Adres</th>
+                            <th>Aktif</th>
+                            <th>İşlemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reader in readers %}
+                        <tr>
+                            <td>{{ reader.reference_id }}</td>
+                            <td>{{ reader.reference_name }}</td>
+                            <td>{{ reader.reference_contact }}</td>
+                            <td>{{ reader.reader_address }}</td>
+                            <td>{{ reader.active }}</td>
+                            <td>
+                                <a href="{% url 'edit_reader' reader.id %}" class="btn btn-primary btn-sm">Düzenle</a>
+                                <a href="{% url 'delete_reader' reader.id %}" class="btn btn-primary btn-sm">Sil</a>
+
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

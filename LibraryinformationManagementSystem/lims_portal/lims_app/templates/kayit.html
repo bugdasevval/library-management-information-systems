@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+{% extends "index.html" %}
+{% load static %}
+
+{% block main_content %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kayıt Listesi</title>
+    <style>
+        body {
+            background-color: #f0f5f9;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            color: #3883C2;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .form-container {
+            margin-top: 20px;
+        }
+
+        .form-container label {
+            font-weight: bold;
+            color: #2166ef;
+        }
+
+        .form-container input[type="text"],
+        .form-container input[type="date"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-container button {
+            background-color: #3883C2;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        .form-container button:hover {
+            background-color: #1952c8;
+        }
+
+        .btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            color: white;
+            text-decoration: none;
+        }
+
+        .btn-warning {
+            background-color: #3883C2;
+        }
+
+        .btn-warning:hover {
+            background-color: #2166ef;
+        }
+
+        .btn-danger {
+            background-color: #3883C2;
+        }
+
+        .btn-danger:hover {
+            background-color: #2166ef;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Kayıt Listesi</h1>
+        <div class="form-container">
+            <form action="{% url 'kayit' %}" method="GET">
+                <label for="query">TC ile Ara:</label>
+                <input type="text" id="query" name="query" placeholder="TC girin...">
+                <button type="submit">Ara</button>
+            </form>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>TC</th>
+                    <th>İsim</th>
+                    <th>Soyisim</th>
+                    <th>Kitap</th>
+                    <th>Tarih</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for loan in loans %}
+                <tr>
+                    <td>{{ loan.tc }}</td>
+                    <td>{{ loan.name }}</td>
+                    <td>{{ loan.surname }}</td>
+                    <td>{{ loan.book }}</td>
+                    <td>{{ loan.date }}</td>
+                    <td>
+                        <a href="{% url 'edit_loan' loan.id %}" class="btn btn-warning">Düzenle</a>
+                        <a href="{% url 'delete_loan' loan.id %}" class="btn btn-danger">Sil</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
+{% endblock %}

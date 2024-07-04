@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% extends "index.html" %}
+{% load static %}
+
+{% block main_content %}
+<div style="margin-top: 80px; margin-left: 80px;">
+    <div class="book-list">
+        {% for bookso in books %}
+            <div class="book-item" style="margin-bottom: 40px;">
+                <div style="display: flex;">
+                    {% if bookso.cover_image %}
+                        <img src="{{ bookso.cover_image.url }}" alt="{{ bookso.title }} kapak resmi" style="max-width: 250px; max-height: 250px; margin-right: 20px;">
+                    {% else %}
+                        <p>Kapak resmi mevcut değil.</p>
+                    {% endif %}
+                    <div>
+                        <h3>{{ bookso.title }}</h3>
+                        <p><strong>Yazar:</strong> {{ bookso.author }}</p>
+                        <p><strong>Tür:</strong> {{ bookso.genre }}</p>
+                        <p><strong>Basım Tarihi:</strong> {{ bookso.publish_date }}</p>
+                        <p><strong>Sayfa Sayısı:</strong> {{ bookso.page_count }}</p>
+                        <p><strong>Kitap Kodu:</strong> {{ bookso.book_code }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
